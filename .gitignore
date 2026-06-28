@@ -1,0 +1,27 @@
+# Build output
+x64/
+Debug/
+Release/
+build/
+
+# Visual Studio
+.vs/
+.vscode/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.slnx
+*.sln
+
+# Compiled
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+*.lib
+*.exp
+
+# Misc
+combined.md
+highscore.txt
