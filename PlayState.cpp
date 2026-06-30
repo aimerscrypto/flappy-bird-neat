@@ -153,6 +153,7 @@ void PlayState::saveHighScore()
 {
     if (score > highScore)
     {
+        highScore = score;
         std::ofstream file("highscore.txt");
         if (file.is_open())
         {

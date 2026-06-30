@@ -14,6 +14,13 @@ private:
     int finalScore;
     int highScore;
 
+    sf::Font        font;
+    sf::Text        scoreLabel;
+    sf::Text        highScoreLabel;
+    sf::Text        restartLabel;
+
+    float           inputCooldownTimer = 1.f;
+
     GameStateManager* gsm = nullptr;
 
 public:
