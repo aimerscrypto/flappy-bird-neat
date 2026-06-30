@@ -1,12 +1,13 @@
 #include "SoundManager.h"
+#include "AssetLoader.h"
 
 SoundManager::SoundManager()
 {
-    bufferWing.loadFromFile("Assets/audio/wing.wav");
-    bufferPoint.loadFromFile("Assets/audio/point.wav");
-    bufferHit.loadFromFile("Assets/audio/hit.wav");
-    bufferDie.loadFromFile("Assets/audio/die.wav");
-    bgMusic.openFromFile("Assets/audio/music.mp3");
+    AssetLoader::loadSoundBuffer(bufferWing, "Assets/audio/wing.wav");
+    AssetLoader::loadSoundBuffer(bufferPoint, "Assets/audio/point.wav");
+    AssetLoader::loadSoundBuffer(bufferHit, "Assets/audio/hit.wav");
+    AssetLoader::loadSoundBuffer(bufferDie, "Assets/audio/die.wav");
+    AssetLoader::openMusic(bgMusic, "Assets/audio/music.mp3");
     
     bgMusic.setVolume(100);
     bgMusic.setLoop(true);

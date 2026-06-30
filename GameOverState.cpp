@@ -3,19 +3,27 @@
 #include "GameStateManager.h"
 #include "PlayState.h"
 #include "SoundManager.h"
+#include "AssetLoader.h"
 
 GameOverState::GameOverState(int score, int highScore)
+    : finalScore(score), highScore(highScore)
 {
     SoundManager::getInstance().stopMusic();
-    finalScore = score;
-    this->highScore = highScore;
 
-    font.loadFromFile("Assets/Fonts/arial.ttf");
+    // Load and center the gameover.png sprite
+    AssetLoader::loadTexture(gameOverTexture, "Assets/Sprites/UI/gameover.png");
+    gameOverSprite.setTexture(gameOverTexture);
 
-    text.setFont(font);
-    text.setCharacterSize(30);
-    text.setFillColor(sf::Color::White);
-    text.setPosition(200, 250);
+    float texW = static_cast<float>(gameOverTexture.getSize().x);
+    float texH = static_cast<float>(gameOverTexture.getSize().y);
+
+    // Scale so it fits nicely — cap at 55% of screen width
+    float scl = (SCREEN_WIDTH * 0.55f) / texW;
+    gameOverSprite.setScale(scl, scl);
+
+    // Center horizontally, place in upper-middle area
+    gameOverSprite.setOrigin(texW / 2.f, texH / 2.f);
+    gameOverSprite.setPosition(SCREEN_WIDTH / 2.f, 200.f);
 }
 
 void GameOverState::handleInput(sf::Event event)
@@ -27,32 +35,30 @@ void GameOverState::handleInput(sf::Event event)
 
     if (event.type == sf::Event::KeyPressed &&
         (event.key.code == sf::Keyboard::R || event.key.code == sf::Keyboard::Space))
-    {
         shouldRestart = true;
-    }
 
-    if(event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
-    {
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
         shouldRestart = true;
-    }
 
-    if(event.type == sf::Event::TouchBegan && event.touch.finger == 0)
-    {
+    if (event.type == sf::Event::TouchBegan && event.touch.finger == 0)
         shouldRestart = true;
-    }
 
-    if(shouldRestart)
-    {
+    if (shouldRestart)
         gsm->changeState(std::make_unique<PlayState>());
-    }
 }
 
 void GameOverState::update(float dt) {}
 
-void GameOverState::render(sf::RenderWindow &window)
+void GameOverState::render(sf::RenderWindow& window)
 {
-    text.setString("Game Over\nScore: " + std::to_string(finalScore) +
-                   "\nBest: " + std::to_string(highScore) +
-                   "\nTap or Space to Restart");
-    window.draw(text);
+    // Draw game over banner
+    window.draw(gameOverSprite);
+
+    // Draw score centered below banner using digit sprites
+    // Scale digits at 3x for visibility
+    constexpr float DIGIT_SCALE = 3.f;
+    float scoreW = spriteNum.getWidth(finalScore, DIGIT_SCALE);
+    float scoreX = (SCREEN_WIDTH - scoreW) / 2.f;
+    float scoreY = 340.f;
+    spriteNum.draw(window, finalScore, scoreX, scoreY, DIGIT_SCALE);
 }

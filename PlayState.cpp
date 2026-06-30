@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "GameOverState.h"
 #include "SoundManager.h"
+#include "AssetLoader.h"
 #include <fstream>
 
 PlayState::PlayState()
@@ -11,15 +12,9 @@ PlayState::PlayState()
     spawnPipes();
 
     SoundManager::getInstance().playMusic();
-    heartTexture.loadFromFile("Assets/Sprites/Player/heart.png");
+    AssetLoader::loadTexture(heartTexture, "Assets/Sprites/Player/heart.png");
     heartSprite.setTexture(heartTexture);
     heartSprite.setScale(0.2f, 0.2f);
-
-    font.loadFromFile("Assets/Fonts/arial.ttf");
-    scoreText.setFont(font);
-    scoreText.setCharacterSize(24);
-    scoreText.setFillColor(sf::Color::White);
-    scoreText.setPosition(10, 10);
 }
 
 void PlayState::handleInput(sf::Event event)
@@ -136,8 +131,11 @@ void PlayState::render(sf::RenderWindow &window)
         window.draw(heartSprite);
     }
 
-    scoreText.setString("Score: " + std::to_string(score));
-    window.draw(scoreText);
+    // Draw score centered at top using digit sprites
+    constexpr float DIGIT_SCALE = 2.5f;
+    float scoreW = spriteNum.getWidth(score, DIGIT_SCALE);
+    float scoreX = (SCREEN_WIDTH - scoreW) / 2.f;
+    spriteNum.draw(window, score, scoreX, 10.f, DIGIT_SCALE);
 }
 
 

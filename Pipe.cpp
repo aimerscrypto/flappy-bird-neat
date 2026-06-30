@@ -1,11 +1,12 @@
 #include "Pipe.h"
 #include "Bird.h"
+#include "AssetLoader.h"
 
 const std::string pipePath = "Assets/Sprites/Tiles/Style 1/PipeStyle1.png";
 
 Pipe::Pipe(float x, float y, int width, int height,int frameIndex) : Entity(x, y, width, height)
 {
-    texture.loadFromFile(pipePath);
+    AssetLoader::loadTexture(texture, pipePath);
     texture.setRepeated(true);
     sprite.setTexture(texture);
     

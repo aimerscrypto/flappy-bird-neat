@@ -1,4 +1,5 @@
 #include "Background.h"
+#include "AssetLoader.h"
 
 Background::Background(float width, float height):screenWidth(width), screenHeight(height)
 {
@@ -6,7 +7,7 @@ Background::Background(float width, float height):screenWidth(width), screenHeig
     for (int i = 0; i < BG_COUNT; ++i)
     {
         std::string filePath = "Assets/Sprites/Background/Background" + std::to_string(i+1) + ".png";
-        textures[i].loadFromFile(filePath);
+        AssetLoader::loadTexture(textures[i], filePath);
     }
 
     // Initialize sprites

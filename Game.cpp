@@ -1,8 +1,8 @@
 #include"Game.h"
-#include "PlayState.h"
+#include "MenuState.h"
 Game::Game(): window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "Flappy Bird")
 {
-    gsm.changeState(std::make_unique<PlayState>());
+    gsm.changeState(std::make_unique<MenuState>());
 }
 
 void Game::run() 

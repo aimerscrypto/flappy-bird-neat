@@ -1,8 +1,9 @@
 #pragma once
-#include"GameState.h"
-#include"Bird.h"
-#include"PipePair.h"
-#include"Background.h"
+#include "GameState.h"
+#include "Bird.h"
+#include "PipePair.h"
+#include "Background.h"
+#include "SpriteNumber.h"
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -14,21 +15,20 @@ class PlayState : public GameState {
         Background bg;
         Bird bird;
         std::vector<std::unique_ptr<PipePair>> pipes;
-        GameStateManager* gsm=nullptr; // Pointer to the GameStateManager
+        GameStateManager* gsm = nullptr;
 
         int score = 0;
 
-        float pipeSpawnTimer = 0.0f;
-        float pipeSpawnInterval = 1.5f; // Time interval between pipe spawns in seconds
+        float pipeSpawnTimer    = 0.0f;
+        float pipeSpawnInterval = 1.5f;
 
-        sf::Font font;
-        sf::Text scoreText;
+        SpriteNumber spriteNum;
 
         // Heart icon for lives
         sf::Texture heartTexture;
-        sf::Sprite heartSprite;
+        sf::Sprite  heartSprite;
 
-        int highScore = 0; 
+        int highScore = 0;
 
     public:
         PlayState();
